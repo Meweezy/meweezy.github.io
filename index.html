@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COVID-19 Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="nav"></div>
+
+    <div class="map-info">
+      <div id="map"></div>
+    </div>
+
+    <div class="data-info"></div>
+    <div id="map"></div>
+    <!--Load the API from the specified URL
+            * The async attribute allows the browser to render the page while the API loads
+            * The key parameter will contain your own API key (which is not needed for this tutorial)
+            * The callback parameter executes the initMap() function
+            -->
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoiY_5YWBWCEt1MXx7raTUTic8mb35r44&callback=initMap"
+    ></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
