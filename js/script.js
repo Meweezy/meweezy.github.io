@@ -2,55 +2,127 @@ const url = "https://disease.sh/v2/countries";
 let markers = [];
 let countries;
 let map;
-
-// //Get JSON Data
-
-// let request = new XMLHttpRequest();
-// request.open("GET", "https://disease.sh/v2/countries", true);
-
-// request.onload = function () {
-//   //console.log(this.responseText);
-//   //let countries = this.response;
-//   let countries = JSON.parse(this.response);
-//   //console.log(countries);
-//   //   countries.forEach((country) => {
-//   //     if (country.country == "Argentina") {
-//   //       console.log(country.country.toString().toUpperCase());
-//   //       console.log("Confirmed Cases: " + country.cases);
-//   //       console.log("Total Recovered: " + country.recovered);
-//   //       console.log("Total Deaths: " + country.deaths);
-//   //     }
-//   //   });
-//   searchCountries(countries);
-// };
-
-// request.send();
-
-// //End get JSON Data
+//var infoWindow;
 
 // Initialize and add the map
+window.onload = () => {
+  getCountryData();
+};
 
 function initMap() {
   // The location of Germany
   var germany = { lat: 51.165690999999995, lng: 10.451526 };
   // The map, centered at Germany
   map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 2,
+    zoom: 4,
     center: germany,
   });
+
+  //infoWindow = new google.maps.InfoWindow();
   // The marker, positioned at germany
   //var marker = new google.maps.Marker({ position: germany, map: map });
-  searchCountries(url, countries);
+  //searchCountries(url, countries);
   // //Get JSON Data
 }
 
-//Get JSON
-getAllCases = (url) => {
-  const casesPromise = fetch(url);
-  return casesPromise.then((response) => {
-    //console.log(response.json());
-    return response.json();
+const getCountryData = () => {
+  fetch("https://disease.sh/v2/countries")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      showDataOnMap(data);
+      showDataInTable(data);
+    });
+};
+
+const showDataOnMap = (data) => {
+  data.map((country) => {
+    let countryCenter = {
+      lat: country.countryInfo.lat,
+      lng: country.countryInfo.long,
+    };
+
+    var countryCircle = new google.maps.Circle({
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35,
+      map: map,
+      center: countryCenter,
+      radius: country.casesPerOneMillion * 15,
+      // radius: Math.sqrt(country.population) * 20,
+    });
+
+    var html = `
+    <div class="info-container">
+    <div class="info-flag" style="background-image: url(${country.countryInfo.flag})"></div>
+
+        <div class="info-name">${country.country}</div>
+        <div class="info-confirmed">Total Cases: ${country.cases}</div>
+        <div class="info-active">Active Cases: ${country.active}</div>
+        <div class="info-deaths">Total Deaths: ${country.deaths}</div>
+        <div class="info-recovered">Total Recovered: ${country.recovered}</div>
+    </div>
+  
+    `;
+
+    var infoWindow = new google.maps.InfoWindow({
+      content: html,
+      position: countryCenter,
+    });
+
+    google.maps.event.addListener(countryCircle, "mouseover", function (ev) {
+      infoWindow.open(map);
+    });
+
+    google.maps.event.addListener(countryCircle, "mouseout", function (ev) {
+      infoWindow.close();
+    });
   });
+};
+
+// //Get JSON
+// getAllCases = (url) => {
+//   const casesPromise = fetch(url);
+//   return casesPromise.then((response) => {
+//     //console.log(response.json());
+//     return response.json();
+//   });
+// };
+
+//Display data in table
+const showDataInTable = (data) => {
+  let html = "";
+  const tableOnPage = document.getElementById("tableOnPage");
+
+  // data.map((country) => {
+  //   tableOnPage.innerHTML = `
+
+  //       <tr>
+  //         <th scope="row">${country.country}</th>
+  //         <td>${country.cases}</td>
+  //         <td>${country.recovered}</td>
+  //         <td>${country.deaths}</td>
+  //       </tr>
+
+  //   `;
+  // });
+  data.forEach((country) => {
+    html += `
+    
+          <tr>
+            <td>${country.country}</td>
+            <td>${country.cases}</td>
+           <td>${country.recovered}</td>
+           <td>${country.deaths}</td>
+         </tr>
+      
+      
+       `;
+  });
+  tableOnPage.innerHTML = html;
 };
 
 //Search Countries
