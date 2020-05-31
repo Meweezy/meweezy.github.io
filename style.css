@@ -1,24 +1,92 @@
-body{
-    margin:0;
+body {
+  margin: 0;
 }
 
-.nav{
-    background-color: blue;
-
-    height: 50px;  
+.nav {
+  height: 50px;
 }
 
-#map{
-    width: 100%;
-    height: 100%;
+#map {
+  width: 100%;
+  height: 100%;
 }
 
-.map-info{
-    background-color: bisque;
-    height: 400px;
+.chart-data {
+  width: 30%;
+  margin-left: 70px;
+  margin-top: 20px;
 }
 
-.data-info{
-    background-color: coral;
-    height: 700px;
+.charts {
+  margin-bottom: 50px;
+  width: 600px;
+}
+
+.charts h2 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.map-info {
+  background-color: bisque;
+  height: 400px;
+}
+
+.data-info {
+  background-color: #fefefe;
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  /* overflow-y: scroll; */
+}
+
+.info-container {
+  width: 200px;
+  /* height: 700px; */
+}
+
+.info-flag img {
+  width: 200px;
+  border-radius: 5px;
+}
+
+.info-flag {
+  height: 100px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 8px;
+}
+
+.info-name {
+  font-size: 20px;
+  font-weight: 500;
+  color: #555;
+  /* margin-top: 10px; */
+}
+
+.info-confirmed,
+.info-active,
+.info-deaths,
+.info-recovered {
+  font-size: 16px;
+  margin-top: 5px;
+  /* padding-top: 5px;
+  padding-bottom: 5px; */
+}
+
+.country-data {
+  width: 40%;
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow-y: scroll;
+  /* overflow: hidden; */
+}
+
+.data-info thead tr:nth-child(1) th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #343a40;
+  margin-top: 0;
 }
