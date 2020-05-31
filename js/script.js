@@ -7,14 +7,18 @@ let map;
 // Initialize and add the map
 window.onload = () => {
   getCountryData();
+  getHistoricalData();
+  // buildPieChart();
+  getCurrentData();
 };
 
 function initMap() {
   // The location of Germany
-  var germany = { lat: 51.165690999999995, lng: 10.451526 };
+  var germany = { lat: 51.1657, lng: 10.4515 };
   // The map, centered at Germany
   map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 4,
+    zoom: 3,
+    styles: mapStyle,
     center: germany,
   });
 
@@ -34,6 +38,209 @@ const getCountryData = () => {
       showDataOnMap(data);
       showDataInTable(data);
     });
+};
+
+const getCurrentData = () => {
+  fetch("https://disease.sh/v2/all?yesterday=false")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      // let chartData = buildPieChartData(data);
+      buildPieChart(data);
+    });
+};
+
+//build pie chart
+const buildPieChart = (pieChartData) => {
+  console.log(pieChartData);
+  var ctx = document.getElementById("pieChart").getContext("2d");
+  var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: "doughnut",
+
+    // The data for our dataset
+    data: {
+      labels: [
+        "Total Cases",
+        "Total Deaths",
+        "Total Recovered",
+        "Total Active",
+      ],
+      datasets: [
+        {
+          label: "My First dataset",
+          backgroundColor: [
+            "#2ecc71",
+            "#3498db",
+            "#95a5a6",
+            "#9b59b6",
+            "#f1c40f",
+            "#e74c3c",
+            "#34495e",
+          ],
+          data: [
+            pieChartData.cases,
+            pieChartData.deaths,
+            pieChartData.recovered,
+            pieChartData.active,
+          ],
+        },
+      ],
+    },
+
+    // Configuration options go here
+    options: {
+      animation: {
+        animateScale: true,
+      },
+    },
+  });
+};
+
+const buildPieChartData = (data) => {
+  let pieChartData = [];
+
+  // console.log("Pie Chart Data : " + data.cases);
+};
+
+const buildChartData = (data) => {
+  `
+  required format:
+  [
+    {
+      x: data,
+      y: 4352
+    }
+
+
+  ]
+  `;
+  let chartData = [];
+
+  for (let date in data.cases) {
+    let newDataPoint = {
+      x: date,
+      y: data.cases[date],
+    };
+    chartData.push(newDataPoint);
+  }
+  return chartData;
+};
+
+const buildRecovered = (data) => {
+  let recoveredData = [];
+
+  for (let date in data.recovered) {
+    let newDataPoint = {
+      x: date,
+      y: data.recovered[date],
+    };
+    recoveredData.push(newDataPoint);
+  }
+  return recoveredData;
+};
+
+const buildDeaths = (data) => {
+  let deathsData = [];
+
+  for (let date in data.deaths) {
+    let newDataPoint = {
+      x: date,
+      y: data.deaths[date],
+    };
+    deathsData.push(newDataPoint);
+  }
+  return deathsData;
+};
+
+const getHistoricalData = () => {
+  fetch("https://disease.sh/v2/historical/all?lastdays=150")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      let chartData = buildChartData(data);
+      let recoveredData = buildRecovered(data);
+      let deathsData = buildDeaths(data);
+      buildChart(chartData, recoveredData, deathsData);
+    });
+};
+
+//build line chart
+const buildChart = (chartData, recoveredData, deathsData) => {
+  var timeFormat = "MM/DD/YYYY";
+
+  var ctx = document.getElementById("myChart").getContext("2d");
+  var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: "line",
+
+    // The data for our dataset
+    data: {
+      // labels: ["January", "February", "March", "April", "May", "June", "July"],
+      datasets: [
+        {
+          label: "Total Cases",
+          backgroundColor: "#1d2c4d",
+          borderColor: "#1d2c4d",
+          data: chartData,
+          fill: false,
+        },
+        {
+          label: "Total Recovered",
+          backgroundColor: "green",
+          borderColor: "green",
+          data: recoveredData,
+          fill: false,
+        },
+        {
+          label: "Total Deaths",
+          backgroundColor: "red",
+          borderColor: "red",
+          data: deathsData,
+          fill: false,
+        },
+      ],
+    },
+
+    // Configuration options go here
+    options: {
+      tooltips: {
+        mode: "index",
+        intersect: false,
+      },
+      hover: {
+        mode: "index",
+        intersect: false,
+      },
+      scales: {
+        xAxes: [
+          {
+            type: "time", //Moment.js required to use time axis
+            time: {
+              format: timeFormat,
+              tooltipFormat: "ll",
+            },
+            scaleLabel: {
+              display: true,
+              labelString: "Date",
+            },
+          },
+        ],
+        yAxes: [
+          {
+            ticks: {
+              callback: function (value, index, values) {
+                return numeral(value).format("0,0");
+              },
+            },
+          },
+        ],
+      },
+    },
+  });
 };
 
 const showDataOnMap = (data) => {
@@ -114,9 +321,9 @@ const showDataInTable = (data) => {
     
           <tr>
             <td>${country.country}</td>
-            <td>${country.cases}</td>
-           <td>${country.recovered}</td>
-           <td>${country.deaths}</td>
+            <td>${numeral(country.cases).format("0,0")}</td>
+           <td>${numeral(country.recovered).format("0,0")}</td>
+           <td>${numeral(country.deaths).format("0,0")}</td>
          </tr>
       
       

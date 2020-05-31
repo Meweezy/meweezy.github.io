@@ -34,6 +34,16 @@
           <tbody id="tableOnPage"></tbody>
         </table>
       </div>
+      <div class="chart-data">
+        <div class="charts">
+          <h2>Current Global Status</h2>
+          <canvas id="pieChart"></canvas>
+        </div>
+        <div class="charts">
+          <h2>Historical Data (last 150 Days)</h2>
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
     </div>
     <!-- <div id="map"></div> -->
     <!--Load the API from the specified URL
@@ -46,6 +56,10 @@
       defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoiY_5YWBWCEt1MXx7raTUTic8mb35r44&callback=initMap"
     ></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="js/map-style.js"></script>
     <script src="js/script.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
