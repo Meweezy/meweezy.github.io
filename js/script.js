@@ -30,7 +30,7 @@ function initMap() {
 }
 
 const getCountryData = () => {
-  fetch("https://disease.sh/v2/countries")
+  fetch("http://localhost:3000/countries")
     .then((response) => {
       return response.json();
     })
@@ -258,7 +258,7 @@ const showDataOnMap = (data) => {
       fillOpacity: 0.35,
       map: map,
       center: countryCenter,
-      radius: country.casesPerOneMillion * 15,
+      radius: country.cases,
       // radius: Math.sqrt(country.population) * 20,
     });
 
