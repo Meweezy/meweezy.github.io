@@ -2,6 +2,7 @@ const url = "https://disease.sh/v2/countries";
 let markers = [];
 let countries;
 let map;
+let recoveryRate;
 //var infoWindow;
 
 // Initialize and add the map
@@ -10,6 +11,7 @@ window.onload = () => {
   getHistoricalData();
   // buildPieChart();
   getCurrentData();
+  calcRecoveryRate();
 };
 
 function initMap() {
@@ -37,6 +39,7 @@ const getCountryData = () => {
     .then((data) => {
       showDataOnMap(data);
       showDataInTable(data);
+      console.log(data);
     });
 };
 
@@ -46,10 +49,35 @@ const getCurrentData = () => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       // let chartData = buildPieChartData(data);
       buildPieChart(data);
+      updateCurrentTabs(data);
+      calcRecoveryRate(data);
     });
+};
+
+const updateCurrentTabs = (currentData) => {
+  document
+    .getElementById("tabTotal")
+    .querySelector(".card-subtitle").innerHTML = numeral(
+    currentData.cases
+  ).format("0,0");
+  document
+    .getElementById("tabActive")
+    .querySelector(".card-subtitle").innerHTML = numeral(
+    currentData.active
+  ).format("0,0");
+  document
+    .getElementById("tabRecovered")
+    .querySelector(".card-subtitle").innerHTML = numeral(
+    currentData.recovered
+  ).format("0,0");
+  document
+    .getElementById("tabDeaths")
+    .querySelector(".card-subtitle").innerHTML = numeral(
+    currentData.deaths
+  ).format("0,0");
 };
 
 //build pie chart
@@ -92,17 +120,12 @@ const buildPieChart = (pieChartData) => {
 
     // Configuration options go here
     options: {
+      maintainAspectRatio: false,
       animation: {
         animateScale: true,
       },
     },
   });
-};
-
-const buildPieChartData = (data) => {
-  let pieChartData = [];
-
-  // console.log("Pie Chart Data : " + data.cases);
 };
 
 const buildChartData = (data) => {
@@ -207,6 +230,7 @@ const buildChart = (chartData, recoveredData, deathsData) => {
 
     // Configuration options go here
     options: {
+      maintainAspectRatio: false,
       tooltips: {
         mode: "index",
         intersect: false,
@@ -222,10 +246,6 @@ const buildChart = (chartData, recoveredData, deathsData) => {
             time: {
               format: timeFormat,
               tooltipFormat: "ll",
-            },
-            scaleLabel: {
-              display: true,
-              labelString: "Date",
             },
           },
         ],
@@ -433,3 +453,81 @@ function placeMarkerAndPanTo(latLng, map) {
   });
   map.panTo(latLng);
 }
+
+const updateMap = (id) => {
+  const tabClasses = document.querySelectorAll(".card");
+  let activeClass;
+  let textColor;
+
+  tabClasses.forEach((tabClass) => {
+    tabClass.classList.remove("activeActiveCases");
+    tabClass.classList.remove("activeTotal");
+    tabClass.classList.remove("activeRecovered");
+    tabClass.classList.remove("activeDeaths");
+    tabClass.querySelector(".card-subtitle").style.color = "";
+  });
+
+  switch (id) {
+    case "tabActive":
+      activeClass = "activeActiveCases";
+      textColor = "black";
+      break;
+
+    case "tabTotal":
+      activeClass = "activeTotal";
+      textColor = "white";
+      break;
+
+    case "tabRecovered":
+      activeClass = "activeRecovered";
+      textColor = "white";
+
+      break;
+
+    case "tabDeaths":
+      activeClass = "activeDeaths";
+      textColor = "white";
+
+      break;
+  }
+
+  document.getElementById(id).classList.add(activeClass);
+  document
+    .getElementById(id)
+    .querySelector(".card-subtitle").style.color = textColor;
+
+  // document.getElementById(id).style.color = textColor;
+};
+
+//calculating the World Recovery Rate
+const calcRecoveryRate = (currentData) => {
+  let totalGlobalCases = currentData.cases;
+  let totalRecovered = currentData.recovered;
+  // let recoverySpan = document.getElementById("recoverySpan");
+  recoveryRate = Math.round((totalRecovered / totalGlobalCases) * 100);
+  // console.log("Recovery Rate: " + recoveryRate + "%");
+  // recoverySpan.innerHTML = `${recoveryRate}%`;
+  document.querySelector(
+    ".radial-circle-inner"
+  ).innerHTML = `<div id="recoverySpan" data-target="${recoveryRate}"></div><span>%</span>`;
+
+  animateRecoveryRate();
+};
+
+//animation code for the recovery rate card
+const animateRecoveryRate = () => {
+  const counter = document.querySelector("#recoverySpan");
+  const speed = 50;
+
+  const target = +counter.getAttribute("data-target");
+  const count = +counter.innerText;
+  const increment = Math.ceil(target / speed);
+  // const increment = 2;
+
+  if (count < target) {
+    counter.innerText = count + increment;
+    setTimeout(animateRecoveryRate, 1);
+  } else {
+    counter.innerText = target;
+  }
+};

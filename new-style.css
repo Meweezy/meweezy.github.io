@@ -1,0 +1,235 @@
+.main {
+  height: 100vh;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.map-container {
+  /* height: 500px; */
+  /* overflow: hidden; */
+}
+#map {
+  height: 500px;
+  border-radius: 12px;
+  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.3);
+  /* overflow: hidden; */
+}
+
+.chart-container {
+  height: 300px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.chart-container .col {
+  background-color: #eff2f6;
+  border-radius: 12px;
+}
+
+.linear-chart,
+.pie-chart {
+  height: 100%;
+  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.3);
+}
+
+.title-container h1 {
+  color: #fc3c3c;
+  margin-bottom: 0;
+}
+
+.title-container h4 {
+  color: #cacbcf;
+  text-transform: uppercase;
+}
+
+.stats-container .card {
+  background-color: #eff2f6;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.3);
+}
+
+.stats-container .card-subtitle {
+  display: flex;
+  align-items: center;
+}
+
+.stats-container .card-subtitle i {
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-top: 5px;
+}
+
+/* .stats-container .card:hover {
+  background-color: #fc3c3c;
+  color: white !important;
+  transition: all 0.3s ease-in-out;
+} */
+
+#tabTotal .card-subtitle {
+  color: #3e444a;
+}
+#tabTotal:hover {
+  background-color: #3e444a;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+/** CHANGE COLOR OF SUBTITLE ON HOVER **/
+#tabTotal:hover .card-subtitle {
+  color: white;
+}
+
+#tabDeaths .card-subtitle {
+  color: #fc3c3c;
+}
+#tabDeaths:hover {
+  background-color: #fc3c3c;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+/** CHANGE COLOR OF SUBTITLE ON HOVER **/
+#tabDeaths:hover .card-subtitle {
+  color: white;
+}
+
+#tabActive .card-subtitle {
+  color: #f9a825;
+}
+#tabActive:hover {
+  background-color: #f9a825;
+  /* color: black; */
+  transition: all 0.3s ease-in-out;
+}
+/** CHANGE COLOR OF SUBTITLE ON HOVER **/
+#tabActive:hover .card-subtitle {
+  color: inherit;
+}
+#tabRecovered .card-subtitle {
+  color: green;
+}
+
+#tabRecovered:hover {
+  background-color: green;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+/** CHANGE COLOR OF SUBTITLE ON HOVER **/
+#tabRecovered:hover .card-subtitle {
+  color: white;
+}
+
+.stats-container .card:active {
+  transform: translateY(5px);
+}
+
+.stats-container .card-subtitle {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.stats-container .card-body {
+  padding: 1rem;
+}
+
+/*****Set classes to apply after clicking on the tab*****/
+.activeRecovered {
+  background-color: green !important;
+  color: white;
+}
+
+.activeTotal {
+  background-color: #3e444a !important;
+  color: white;
+}
+.activeDeaths {
+  background-color: #fc3c3c !important;
+  color: white;
+}
+.activeActiveCases {
+  background-color: #f9a825 !important;
+}
+/*****End set classes******/
+
+.recovery-rate {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  width: 100px;
+  padding-bottom: 50px;
+  margin-right: 20px;
+  margin-left: 20px;
+  border-radius: 12px;
+  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.3);
+}
+
+.radial-circle-outer {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: green;
+}
+
+.radial-circle-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  background-color: #eceff1;
+  z-index: 100;
+  overflow: hidden;
+}
+.radial-circle-inner {
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.recovery-rate h3 {
+  margin-top: 20px;
+}
+
+#recoverySpan {
+  /* width: auto;
+  white-space: nowrap;
+  animation: countNumber 0.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: steps(10); */
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+}
+
+#recoverSpan div {
+  /* float: left;
+  text-align: center;
+  line-height: 100px;
+  width: 100px;
+  height: 100px;
+  display: inline-block; */
+}
+
+@-webkit-keyframes countNumber {
+  0% {
+    margin-top: 0px;
+  }
+  100% {
+    margin-top: -1000px;
+  }
+}
+
+.logoImage {
+  height: auto;
+  /* border: 1px black solid; */
+}
+.img-fluid {
+  width: 120px;
+}
