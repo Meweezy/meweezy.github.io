@@ -76,8 +76,7 @@
   margin-right: 0;
 }
 
-.chart-container .col-6,
-.chart-container .col-4 {
+.chart-container .col-6 {
   background-color: #eff2f6;
   border-radius: 12px;
 }
