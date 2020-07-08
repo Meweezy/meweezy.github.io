@@ -71,14 +71,19 @@
 }
 
 .chart-container {
-  height: 300px;
+  height: 400px;
   margin-left: 0;
   margin-right: 0;
 }
 
-.chart-container .col {
+.chart-container .col-6,
+.chart-container .col-4 {
   background-color: #eff2f6;
   border-radius: 12px;
+}
+
+.chart-container h4 {
+  text-align: center;
 }
 
 .linear-chart,
