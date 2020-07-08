@@ -133,7 +133,7 @@ const buildPieChart = (pieChartData) => {
 
     // Configuration options go here
     options: {
-      maintainAspectRatio: false,
+      maintainAspectRatio: true,
       animation: {
         animateScale: true,
       },
@@ -243,7 +243,7 @@ const buildChart = (chartData, recoveredData, deathsData) => {
 
     // Configuration options go here
     options: {
-      maintainAspectRatio: false,
+      maintainAspectRatio: true,
       tooltips: {
         mode: "index",
         intersect: false,
