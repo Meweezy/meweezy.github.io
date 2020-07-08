@@ -51,7 +51,7 @@ const clearTheMap = () => {
 };
 
 const getCountryData = () => {
-  fetch("http://localhost:3000/countries")
+  fetch("https://disease.sh/v2/countries")
     .then((response) => {
       return response.json();
     })
