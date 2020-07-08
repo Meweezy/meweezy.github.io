@@ -110,26 +110,19 @@ const buildPieChart = (pieChartData) => {
 
     // The data for our dataset
     data: {
-      labels: [
-        "Total Cases",
-        "Total Deaths",
-        "Total Recovered",
-        "Total Active",
-      ],
+      labels: ["Total Deaths", "Total Recovered", "Total Active"],
       datasets: [
         {
           label: "My First dataset",
           backgroundColor: [
-            "#2ecc71",
-            "#3498db",
-            "#95a5a6",
-            "#9b59b6",
+            "#fc3c3c",
+            "#048001",
+            "#f9a824",
             "#f1c40f",
             "#e74c3c",
             "#34495e",
           ],
           data: [
-            pieChartData.cases,
             pieChartData.deaths,
             pieChartData.recovered,
             pieChartData.active,
