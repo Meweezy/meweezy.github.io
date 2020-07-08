@@ -1,0 +1,364 @@
+.main {
+  height: 100vh;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-container input {
+  /* border: none;
+  background: inherit;
+  color: white;
+  outline: none; */
+}
+
+.search-container input:focus,
+.search-container input:active,
+.search-container input:focus-within {
+  /* box-shadow: none;
+  background: inherit; */
+}
+
+#map {
+  height: 500px;
+  border-radius: 12px;
+  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.3);
+  /* overflow: hidden; */
+}
+
+.info-container {
+  width: 200px;
+  /* height: 700px; */
+}
+
+.info-flag img {
+  width: 200px;
+  border-radius: 5px;
+}
+
+.info-flag {
+  height: 100px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 8px;
+}
+
+.info-name {
+  font-size: 20px;
+  font-weight: 500;
+  color: #555;
+  /* margin-top: 10px; */
+}
+
+.info-confirmed,
+.info-active,
+.info-deaths,
+.info-recovered {
+  font-size: 16px;
+  margin-top: 5px;
+  /* padding-top: 5px;
+  padding-bottom: 5px; */
+}
+
+.header-container {
+  background-color: #263238;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.chart-container {
+  height: 300px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.chart-container .col {
+  background-color: #eff2f6;
+  border-radius: 12px;
+}
+
+.linear-chart,
+.pie-chart {
+  height: 100%;
+  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.3);
+}
+
+.title-container {
+  padding: 20px 20px;
+}
+
+.title-container h1 {
+  color: #fc3c3c;
+  margin-bottom: 0;
+}
+
+.title-container h4 {
+  /* color: #cacbcf; */
+  font-size: 30px;
+  margin-left: 15px;
+  text-transform: uppercase;
+}
+
+.stats-container .card {
+  background-color: #eff2f6;
+  border-radius: 12px;
+  border: none;
+
+  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.3);
+}
+
+.stats-container .card-subtitle {
+  display: flex;
+  align-items: center;
+}
+
+.stats-container .card-subtitle i {
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-top: 5px;
+}
+
+/* .stats-container .card:hover {
+  background-color: #fc3c3c;
+  color: white !important;
+  transition: all 0.3s ease-in-out;
+} */
+
+#tabTotal .card-subtitle {
+  color: #3e444a;
+}
+#tabTotal:hover {
+  background-color: #3e444a;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+/** CHANGE COLOR OF SUBTITLE ON HOVER **/
+#tabTotal:hover .card-subtitle {
+  color: white;
+}
+
+#tabDeaths .card-subtitle {
+  color: #fc3c3c;
+}
+#tabDeaths:hover {
+  background-color: #fc3c3c;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+/** CHANGE COLOR OF SUBTITLE ON HOVER **/
+#tabDeaths:hover .card-subtitle {
+  color: white;
+}
+
+#tabActive .card-subtitle {
+  color: #f9a825;
+}
+#tabActive:hover {
+  background-color: #f9a825;
+  /* color: black; */
+  transition: all 0.3s ease-in-out;
+}
+/** CHANGE COLOR OF SUBTITLE ON HOVER **/
+#tabActive:hover .card-subtitle {
+  color: inherit;
+}
+#tabRecovered .card-subtitle {
+  color: green;
+}
+
+#tabRecovered:hover {
+  background-color: green;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+/** CHANGE COLOR OF SUBTITLE ON HOVER **/
+#tabRecovered:hover .card-subtitle {
+  color: white;
+}
+
+.stats-container .card:active {
+  transform: translateY(3px);
+}
+
+.stats-container .card-subtitle {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.stats-container .card-body {
+  padding: 1rem;
+}
+
+/*****Set classes to apply after clicking on the tab*****/
+.activeRecovered {
+  background-color: green !important;
+  color: white;
+}
+
+.activeTotal {
+  background-color: #3e444a !important;
+  color: white;
+}
+.activeDeaths {
+  background-color: #fc3c3c !important;
+  color: white;
+}
+.activeActiveCases {
+  background-color: #f9a825 !important;
+}
+/*****End set classes******/
+
+.recovery-rate {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  width: 100px;
+  padding-bottom: 50px;
+  margin-right: 20px;
+  margin-left: 20px;
+  border-radius: 12px;
+  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.3);
+  background-color: #eff2f6;
+}
+.recovery-rate h3 {
+  text-align: center;
+}
+
+.radial-circle-outer {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+
+.radial-circle-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  background-color: #eceff1;
+  z-index: 100;
+  overflow: hidden;
+}
+.radial-circle-inner {
+  font-size: 2rem;
+  font-weight: 400;
+  animation: glow 5s infinite;
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 -10px green;
+  }
+  40%,
+  60% {
+    box-shadow: 0px 0px 25px 15px green;
+  }
+}
+
+.recovery-rate h3 {
+  margin-top: 20px;
+}
+
+#recoverySpan {
+  /* width: auto;
+  white-space: nowrap;
+  animation: countNumber 0.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: steps(10); */
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+}
+
+#recoverSpan div {
+  /* float: left;
+  text-align: center;
+  line-height: 100px;
+  width: 100px;
+  height: 100px;
+  display: inline-block; */
+}
+
+.logoImage {
+  height: 60px;
+  /* border: 1px solid; */
+  color: white;
+  font-size: 5rem;
+  display: flex;
+  align-items: center;
+}
+
+/* .logoImage span {
+  font-size: 30px;
+  text-align: center;
+} */
+
+/*****TABLE STYLES*****/
+
+.table-container .col {
+  height: 650px;
+  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+}
+
+tbody {
+  display: block;
+  height: 580px;
+  overflow: auto;
+}
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.country-data table {
+  width: 100%;
+}
+/* .country-data th {
+  position: sticky;
+  top: -1px;
+  z-index: 10;
+  background-color: white;
+  margin-top: 0;
+} */
+
+#donate {
+  height: 200px;
+  background-color: #263238;
+  border-radius: 12px;
+  box-shadow: 2px 3px 6px 1px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.donate {
+  display: flex;
+  justify-content: center;
+}
+
+.donate a:focus,
+.donate a:active {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+.donate a:hover {
+  text-decoration: none;
+}
