@@ -80,7 +80,6 @@ body {
   margin-top: 20px;
   border-radius: 10px;
   overflow-y: scroll;
-  /* overflow: hidden; */
 }
 
 .data-info thead tr:nth-child(1) th {

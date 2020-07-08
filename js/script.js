@@ -3,6 +3,14 @@ let markers = [];
 let countries;
 let map;
 let recoveryRate;
+let globalCountryData;
+let mapCircles = [];
+var casesTypeColors = {
+  cases: "#3e444a",
+  active: "#f9a825",
+  recovered: "#00C853",
+  deaths: "#fc3c3c",
+};
 //var infoWindow;
 
 // Initialize and add the map
@@ -31,15 +39,27 @@ function initMap() {
   // //Get JSON Data
 }
 
+const changeDataSelection = (casesType) => {
+  clearTheMap();
+  showDataOnMap(globalCountryData, casesType);
+};
+
+const clearTheMap = () => {
+  for (let circle of mapCircles) {
+    circle.setMap(null);
+  }
+};
+
 const getCountryData = () => {
   fetch("http://localhost:3000/countries")
     .then((response) => {
       return response.json();
     })
     .then((data) => {
+      globalCountryData = data;
       showDataOnMap(data);
       showDataInTable(data);
-      console.log(data);
+      console.log(globalCountryData);
     });
 };
 
@@ -263,7 +283,7 @@ const buildChart = (chartData, recoveredData, deathsData) => {
   });
 };
 
-const showDataOnMap = (data) => {
+const showDataOnMap = (data, casesType = "cases") => {
   data.map((country) => {
     let countryCenter = {
       lat: country.countryInfo.lat,
@@ -271,26 +291,38 @@ const showDataOnMap = (data) => {
     };
 
     var countryCircle = new google.maps.Circle({
-      strokeColor: "#FF0000",
+      strokeColor: casesTypeColors[casesType],
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: "#FF0000",
+      fillColor: casesTypeColors[casesType],
       fillOpacity: 0.35,
       map: map,
       center: countryCenter,
-      radius: country.cases,
+      radius: country[casesType],
+
       // radius: Math.sqrt(country.population) * 20,
     });
+    mapCircles.push(countryCircle);
 
     var html = `
     <div class="info-container">
-    <div class="info-flag" style="background-image: url(${country.countryInfo.flag})"></div>
+    <div class="info-flag" style="background-image: url(${
+      country.countryInfo.flag
+    })"></div>
 
         <div class="info-name">${country.country}</div>
-        <div class="info-confirmed">Total Cases: ${country.cases}</div>
-        <div class="info-active">Active Cases: ${country.active}</div>
-        <div class="info-deaths">Total Deaths: ${country.deaths}</div>
-        <div class="info-recovered">Total Recovered: ${country.recovered}</div>
+        <div class="info-confirmed">Total Cases: ${numeral(
+          country.cases
+        ).format("0,0")}</div>
+        <div class="info-active">Active Cases: ${numeral(country.active).format(
+          "0,0"
+        )}</div>
+        <div class="info-deaths">Total Deaths: ${numeral(country.deaths).format(
+          "0,0"
+        )}</div>
+        <div class="info-recovered">Total Recovered: ${numeral(
+          country.recovered
+        ).format("0,0")}</div>
     </div>
   
     `;
@@ -340,7 +372,10 @@ const showDataInTable = (data) => {
     html += `
     
           <tr>
-            <td>${country.country}</td>
+            <td><img width = 60px src="${country.countryInfo.flag}" /></td>
+            <td>
+                ${country.country}   
+            </td>
             <td>${numeral(country.cases).format("0,0")}</td>
            <td>${numeral(country.recovered).format("0,0")}</td>
            <td>${numeral(country.deaths).format("0,0")}</td>
